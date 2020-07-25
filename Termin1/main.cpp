@@ -33,9 +33,9 @@ void Init()	{
 
     glutKeyboardFunc(keyboard);
 
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
 
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
 
@@ -51,10 +51,11 @@ void RenderScene() { //Zeichenfunktion
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Kamera positionieren
-    gluLookAt(0.0, robotX, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Vorne
+    //gluLookAt(0.0, robotX, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Vorne
     //gluLookAt(5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Rechts
     //gluLookAt(-5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Links
     //gluLookAt(5.0, 5.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Perspektivisch
+	gluLookAt(1., 1., 2., 0., 0., 0., 0., 1., 0.);
 	
 
 	panzer->show();
