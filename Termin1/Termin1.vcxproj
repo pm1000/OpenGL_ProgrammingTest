@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Panzer.cpp" />
     <ClCompile Include="Rechteck.cpp" />
     <ClCompile Include="Wuerfel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Panzer.h" />
     <ClInclude Include="Rechteck.h" />
     <ClInclude Include="Wuerfel.h" />
   </ItemGroup>

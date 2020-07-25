@@ -24,12 +24,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Panzer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rechteck.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Wuerfel.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Panzer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -53,7 +53,7 @@ void RenderScene() { //Zeichenfunktion
 
     
     // Alles frehen
-    glRotatef(robotY, 0.0, 1.0, 0.0);
+    //glRotatef(robotY, 0.0, 1.0, 0.0);
 
 
    glutSwapBuffers();
