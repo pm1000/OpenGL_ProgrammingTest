@@ -8,7 +8,7 @@ public:
 	Panzer();
 
 	void schiessen();
-	
+	void show();
 
 private:
 	void createRumpf();

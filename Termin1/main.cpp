@@ -55,8 +55,9 @@ void RenderScene() { //Zeichenfunktion
     //gluLookAt(5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Rechts
     //gluLookAt(-5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Von Links
     //gluLookAt(5.0, 5.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // Perspektivisch
+	
 
-    
+	panzer->show();
     // Alles frehen
     //glRotatef(robotY, 0.0, 1.0, 0.0);
 
@@ -69,8 +70,8 @@ void Reshape(int width,int height) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, width, height);
-    //glOrtho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
-    gluPerspective(60.0, 1.8, 0.1, 20.0);
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
+    //gluPerspective(60.0, 1.8, 0.1, 20.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -81,16 +82,16 @@ void Animate (int value)     {
    std::cout << "value=" << value << std::endl;
 
    //Winkel anpassen
-   rotate += (ccw) ? -summand : summand ;
+   /*rotate += (ccw) ? -summand : summand ;
    ccw = (rotate < -10) ? false : ccw;
-   ccw = (rotate > 10) ? true : ccw;
+   ccw = (rotate > 10) ? true : ccw;*/
 
 
    // RenderScene aufrufen
    glutPostRedisplay();
 
    // Timer wieder registrieren - Animate wird so nach 10 msec mit value+=1 aufgerufen.
-   int wait_msec = 10;
+   int wait_msec = 500;
    glutTimerFunc(wait_msec, Animate, ++value);
 }
 
