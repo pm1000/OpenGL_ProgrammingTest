@@ -3,12 +3,15 @@
 
 #include <iostream> 
 #include <GL/freeglut.h>         //lädt alles für OpenGL
+#include "Panzer.h"
 
 GLfloat rotate = 0.0;
 GLboolean ccw = true;
 
 GLfloat robotY = 0;
 GLfloat robotX = 0;
+
+Panzer* panzer;
 
 
 
@@ -37,6 +40,8 @@ void Init()	{
     glCullFace(GL_BACK);
 
     glEnable(GL_DEPTH_TEST);
+
+	panzer = new Panzer();
 }
 
 
