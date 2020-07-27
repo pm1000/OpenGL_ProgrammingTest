@@ -1,5 +1,6 @@
 #include "Panzer.h"
 #include "Wuerfel.h"
+#include <cmath>
 
 Panzer::Panzer()
 {
@@ -12,6 +13,11 @@ void Panzer::schiessen()
 void Panzer::show()
 {
 	createRumpf();
+
+	// Den Turm und das Rohr positionieren
+	glTranslatef(0.0, 0.3, -0.3);
+	glScalef(0.9, 0.9, 0.9);
+	glRotatef(25, 0.0, 1.0, 0.0);
 	createTurm();
 	createRohr();
 }
@@ -22,7 +28,196 @@ void Panzer::show()
 
 void Panzer::createRumpf()
 {
+	glPushMatrix(); //Vorigen Zustand sichern
 
+	// Unteren Panzerrumof mit Rädern erstellen
+	//glScalef(2.0, 2.0, 2.0);
+	createRumpfUnten();
+
+	//Oberen Panzerrumpf mit Rädern erstellen
+	createRumpfOben();
+
+	glPopMatrix(); // Vorigen Zustand wieder aufrufen
+}
+
+void Panzer::createRumpfOben()
+{
+	// Panzer einfärben
+	glColor3f(0.0, 0.7, 0.0);
+
+	// rechte Seite
+	glBegin(GL_POLYGON);
+	glVertex3f(1.0, 0.0, 1.5);
+	glVertex3f(1.0, 0.0, -1.5);
+	glVertex3f(0.8, 0.3, -1.2);
+	glVertex3f(0.8, 0.3, 0.5);
+	glEnd();
+
+	// linke Seite
+	glBegin(GL_POLYGON);
+	glVertex3f(-1.0, 0.0, 1.5);
+	glVertex3f(-1.0, 0.0, -1.5);
+	glVertex3f(-0.8, 0.3, -1.2);
+	glVertex3f(-0.8, 0.3, 0.5);
+	glEnd();
+
+	// rechte Seite zw. oben und unten
+	glBegin(GL_POLYGON);
+	glVertex3f(1.0, 0.0, 1.5);
+	glVertex3f(0.7, 0.0, 1.5);
+	glVertex3f(0.7, 0.0, -1.5);
+	glVertex3f(1.0, 0.0, -1.5);
+	glEnd();
+
+	// rechte Seite zw. oben und unten
+	glBegin(GL_POLYGON);
+	glVertex3f(-1.0, 0.0, 1.5);
+	glVertex3f(-0.7, 0.0, 1.5);
+	glVertex3f(-0.7, 0.0, -1.5);
+	glVertex3f(-1.0, 0.0, -1.5);
+	glEnd();
+
+	// Vordere Schräge
+	glColor3f(0.0, 0.4, 0.0);
+	glBegin(GL_POLYGON);
+	glVertex3f(-1.0, 0.0, 1.5);
+	glVertex3f(1.0, 0.0, 1.5);
+	glVertex3f(0.8, 0.3, 0.5);
+	glVertex3f(-0.8, 0.3, 0.5);
+	glEnd();
+
+	// Hintere Schräge
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.8, 0.3, -1.2);
+	glVertex3f(0.8, 0.3, -1.2);
+	glVertex3f(1.0, 0.0, -1.5);
+	glVertex3f(-1.0, 0.0, -1.5);
+	glEnd();
+
+	// Obere Fläche
+	glColor3f(0.0, 0.2, 0.0);
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.8, 0.3, 0.5);
+	glVertex3f(0.8, 0.3, 0.5);
+	glVertex3f(0.8, 0.3, -1.2);
+	glVertex3f(-0.8, 0.3, -1.2);
+	glEnd();
+
+}
+
+void Panzer::createRumpfUnten()
+{
+	// Die Panzerfarben einfärben
+	glColor3f(0.0, 0.5, 0.0);
+
+	// Rechte Seite
+	glBegin(GL_POLYGON);
+	glVertex3f(0.7, 0.0, 1.5);
+	glVertex3f(0.7, -0.6, 0.8);
+	glVertex3f(0.7, -0.6, -1.2);
+	glVertex3f(0.7, 0.0, -1.5);
+	glEnd();
+
+	// Linke Seite
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.7, 0.0, 1.5);
+	glVertex3f(-0.7, -0.6, 0.8);
+	glVertex3f(-0.7, -0.6, -1.2);
+	glVertex3f(-0.7, 0.0, -1.5);
+	glEnd();
+
+	// Vordere schräge
+	glColor3f(0.0, 0.7, 0.0);
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.7, 0.0, 1.5);
+	glVertex3f(-0.7, -0.6, 0.8);
+	glVertex3f(0.7, -0.6, 0.8);
+	glVertex3f(0.7, 0.0, 1.5);
+	glEnd();
+
+	// Untere Seite
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.7, -0.6, 0.8);
+	glVertex3f(0.7, -0.6, 0.8);
+	glVertex3f(0.7, -0.6, -1.2);
+	glVertex3f(-0.7, -0.6, -1.2);
+	glEnd();
+
+	// Hintere Schräge
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.7, -0.6, -1.2);
+	glVertex3f(0.7, -0.6, -1.2);
+	glVertex3f(0.7, 0.0, -1.5);
+	glVertex3f(-0.7, 0.0, -1.5);
+	glEnd();
+
+	// Vorigen Zustand speichern
+	glPushMatrix();
+
+	// Räder auf der rechten Seite
+	glTranslatef(0.7, -0.5, 0.0);
+	createRumpfRad(0.2, 90); // mittleres
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, 0.75);
+	createRumpfRad(0.2, 90); // vorderes
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, -0.75);
+	createRumpfRad(0.2, 90); //hinteres
+	glPopMatrix();
+	glPopMatrix();
+
+	// Räder auf der linken Seite
+	glPushMatrix();
+	glTranslatef(-0.7, -0.5, 0.0);
+	createRumpfRad(0.2, -90); // mittleres
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, 0.75);
+	createRumpfRad(0.2, -90); // vorderes
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, -0.75);
+	createRumpfRad(0.2, -90); //hinteres
+	glPopMatrix();
+
+	// Vorigen Zustand wiederherstellen
+	glPopMatrix();
+}
+
+void Panzer::createRumpfRad(float radBreite, float drehWinkel)
+{
+	float radius = 0.3;
+
+	// Vorigen Zustand speichern
+	glPushMatrix();
+
+	// Farbe setzen
+	glColor3f(0.1, 0.1, 0.1);
+
+	// Unausgefüllten Zylinder erstellen und in Richtung front drehen
+	glRotatef(drehWinkel, 0.0, 1.0, 0.0);
+	gluCylinder(gluNewQuadric(), radius, radius, radBreite, 32, 32);
+	
+	// den Zylinder ausfüllen
+	const float PI = 3.1415926535897932384626433832795;
+
+	// Links die Fläche vom Rad
+	glColor3f(1.0, 0.0, 0.0);
+	glBegin(GL_POLYGON);
+	for (double i = 0; i < 2 * PI; i += PI / 20)
+		glVertex3f(cos(i) * radius, sin(i) * radius, 0.0);
+	glEnd();
+
+	// Rachts die Fläche vom Rad
+	glColor3f(0.0, 1.0, 0.0);
+	glTranslatef(0.0, 0.0, radBreite);
+	glBegin(GL_POLYGON);
+	for (double i = 0; i < 2 * PI; i += PI / 20)
+		glVertex3f(cos(i) * radius, sin(i) * radius, 0.0);
+	glEnd();
+
+	// Vorigen Zustand wieder abrufen
+	glPopMatrix();
 }
 
 

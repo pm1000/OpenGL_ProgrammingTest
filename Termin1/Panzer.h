@@ -12,7 +12,9 @@ public:
 
 private:
 	void createRumpf();
-
+	void createRumpfOben();
+	void createRumpfUnten();
+	void createRumpfRad(float, float);
 
 	void createTurm();
 	void createRohr();
