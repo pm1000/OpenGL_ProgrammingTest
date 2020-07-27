@@ -1,16 +1,28 @@
 #pragma once
 #include <GL/freeglut.h>
-#include "Wuerfel.h"
+#include "Kugel.h"
 class Panzer
 {
 
 public:
-	Panzer();
+	Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrWinkel);
 
-	void schiessen();
+	Kugel * schiessen();
 	void show();
 
+	float getTurmWinkel();
+	void setTurmWinkel(float value);
+
+	float getRohrWinkel();
+	void setRohrWinkel(float value);
+
 private:
+
+	float turmWinkel;
+	float rohrWinkel;
+	float x, y, z;
+
+
 	void createRumpf();
 	void createRumpfOben();
 	void createRumpfUnten();
