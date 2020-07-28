@@ -10,6 +10,7 @@ Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrW
 	this->z = zPos;
 	this->turmWinkel = turmWinkel;
 	this->rohrWinkel = rohrWinkel;
+
 }
 
 Kugel* Panzer::schiessen()
@@ -80,28 +81,79 @@ void Panzer::createRumpf()
 {
 	glPushMatrix(); //Vorigen Zustand sichern
 
+	//texture setzen
+	glColor4f(0., 0., 0., 1.);
+	//GLuint tex_2d = SOIL_load_OGL_texture("panzertexture.png", SOIL_LOAD_AUTO,
+	//	SOIL_CREATE_NEW_ID,
+	//	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	//	/*SOIL_LOAD_AUTO,
+	//	SOIL_CREATE_NEW_ID,
+	//	SOIL_FLAG_INVERT_Y);*/
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	//glBindTexture(GL_TEXTURE_2D, tex_2d);
+	//glEnable(GL_TEXTURE_2D);
+
 	// Unteren Panzerrumof mit Rädern erstellen
-	//glScalef(2.0, 2.0, 2.0);
 	createRumpfUnten();
 
 	//Oberen Panzerrumpf mit Rädern erstellen
 	createRumpfOben();
+	//glDisable(GL_TEXTURE_2D);
 
 	glPopMatrix(); // Vorigen Zustand wieder aufrufen
 }
 
 void Panzer::createRumpfOben()
 {
-	// Panzer einfärben
+	//// Panzer einfärben
 	glColor3f(0.0, 0.7, 0.0);
+	//GLuint tex_2d = SOIL_load_OGL_texture("panzertexture2.png", SOIL_LOAD_AUTO,
+	//	SOIL_CREATE_NEW_ID,
+	//	SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	///*SOIL_LOAD_AUTO,
+	//SOIL_CREATE_NEW_ID,
+	//SOIL_FLAG_INVERT_Y);*/
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	///*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);*/
 
+	//glBindTexture(GL_TEXTURE_2D, tex_2d);
+	//glEnable(GL_TEXTURE_2D);
+
+	//glBegin(GL_TEXTURE_2D);
 	// rechte Seite
-	glBegin(GL_POLYGON);
+	glBegin(GL_QUADS);
 	glVertex3f(1.0, 0.0, 1.5);
+	glTexCoord3f(1.0, 0.0, 1.5);
 	glVertex3f(1.0, 0.0, -1.5);
+	glTexCoord3f(1.0, 0.0, -1.5);
 	glVertex3f(0.8, 0.3, -1.2);
+	glTexCoord3f(0.8, 0.3, -1.2);
 	glVertex3f(0.8, 0.3, 0.5);
+	glTexCoord3f(0.8, 0.3, 0.5);
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 
 	// linke Seite
 	glBegin(GL_POLYGON);
@@ -113,6 +165,11 @@ void Panzer::createRumpfOben()
 
 	// rechte Seite zw. oben und unten
 	glBegin(GL_POLYGON);
+	
+	glTexCoord3f(1.0, 0.0, 1.5);
+	glTexCoord3f(0.7, 0.0, 1.5);
+	glTexCoord3f(0.7, 0.0, -1.5);
+	glTexCoord3f(1.0, 0.0, -1.5);
 	glVertex3f(1.0, 0.0, 1.5);
 	glVertex3f(0.7, 0.0, 1.5);
 	glVertex3f(0.7, 0.0, -1.5);
@@ -128,12 +185,16 @@ void Panzer::createRumpfOben()
 	glEnd();
 
 	// Vordere Schräge
-	glColor3f(0.0, 0.4, 0.0);
+	//glColor3f(0.0, 0.4, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex3f(-1.0, 0.0, 1.5);
+	glTexCoord3f(-1, 0, 1.5);
 	glVertex3f(1.0, 0.0, 1.5);
+	glTexCoord3f(1, 0, 1.5);
 	glVertex3f(0.8, 0.3, 0.5);
+	glTexCoord3f(0.8, 0.3, 0.5);;
 	glVertex3f(-0.8, 0.3, 0.5);
+	glTexCoord3f(-0.8, 0.3, 0.5);
 	glEnd();
 
 	// Hintere Schräge
@@ -145,7 +206,7 @@ void Panzer::createRumpfOben()
 	glEnd();
 
 	// Obere Fläche
-	glColor3f(0.0, 0.2, 0.0);
+	//glColor3f(0.0, 0.2, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex3f(-0.8, 0.3, 0.5);
 	glVertex3f(0.8, 0.3, 0.5);
@@ -158,7 +219,7 @@ void Panzer::createRumpfOben()
 void Panzer::createRumpfUnten()
 {
 	// Die Panzerfarben einfärben
-	glColor3f(0.0, 0.5, 0.0);
+	//glColor3f(0.0, 0.5, 0.0);
 
 	// Rechte Seite
 	glBegin(GL_POLYGON);
@@ -177,7 +238,7 @@ void Panzer::createRumpfUnten()
 	glEnd();
 
 	// Vordere schräge
-	glColor3f(0.0, 0.7, 0.0);
+	//glColor3f(0.0, 0.7, 0.0);
 	glBegin(GL_POLYGON);
 	glVertex3f(-0.7, 0.0, 1.5);
 	glVertex3f(-0.7, -0.6, 0.8);
@@ -242,7 +303,7 @@ void Panzer::createRumpfRad(float radBreite, float drehWinkel)
 	glPushMatrix();
 
 	// Farbe setzen
-	glColor3f(0.1, 0.1, 0.1);
+	//glColor3f(0.1, 0.1, 0.1);
 
 	// Unausgefüllten Zylinder erstellen und in Richtung front drehen
 	glRotatef(drehWinkel, 0.0, 1.0, 0.0);
@@ -281,11 +342,16 @@ void Panzer::createTurm()
 
 	glPushMatrix();
 
+
 	glBegin(GL_TRIANGLES);
 	//front
 		glVertex3f(-0.5, 0.5, -0.5);
+		glTexCoord3f(-0.5, 0.5, -0.5);
 		glVertex3f(-0.5, 0., -0.5);
+		glTexCoord3f(-0.5, 0., -0.5);
 		glVertex3f(0.5, 0.5, -0.5);
+		glTexCoord3f(0.5, 0.5, -0.5);
+
 	
 		glVertex3f(-0.5, 0., -0.5);
 		glVertex3f(0.5, 0., -0.5);
@@ -335,6 +401,7 @@ void Panzer::createTurm()
 		glVertex3f(0.5, 0.5, -0.5);
 		
 	glEnd();
+
 
 	//einstiegsloch
 	glPushMatrix();

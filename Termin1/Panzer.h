@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
+#include "GL/SOIL.h"
 #include "Kugel.h"
 class Panzer
 {
@@ -21,6 +22,8 @@ private:
 	float turmWinkel;
 	float rohrWinkel;
 	float x, y, z;
+
+	GLuint tex_2d;
 
 
 	void createRumpf();
