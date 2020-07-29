@@ -6,12 +6,15 @@
 #include <vector>
 #include "Panzer.h"
 #include "Kugel.h"
+#include "Kamera.h"
+#include <cmath>
 
 
 
 // Objekte für die Szene vorbereiten
 Panzer* panzer;
 std::vector <Kugel*> kugeln;
+Kamera* kamera;
 
 
 
@@ -26,7 +29,31 @@ void keyboard(unsigned char key, int x, int y) {
     case 'w': panzer->setRohrWinkel(panzer->getRohrWinkel() - 2); break;
     case 's': panzer->setRohrWinkel(panzer->getRohrWinkel() + 2); break;
     case ' ': kugeln.push_back(panzer->schiessen()); break;
+    case '0': kamera->setEyePosition(0, 2, 5); break;
+    case '1': kamera->setEyePosition(-5, 2, 0); break;
+    case '2': kamera->setEyePosition(5, 2, 0); break;
+    case '3': kamera->setEyePosition(5, 5, 5); break;
+    case '4': kamera->setEyePosition(-5, 5, -5); break;
     }
+}
+
+
+
+
+void SpecialKey(int key, int x, int y) {
+
+    static float kameraWinkel = 0;
+    static const double PI = 3.1415926535897932384626433832795;
+
+    switch (key) {
+    case GLUT_KEY_RIGHT: kameraWinkel = (kameraWinkel > 360) ? 0: kameraWinkel + 2; break;
+    case GLUT_KEY_LEFT: kameraWinkel = (kameraWinkel < 0) ? 359 : kameraWinkel - 2; break;
+    }
+
+    float newZ = cosf(2 * PI * kameraWinkel / 360.0) * 5;
+    float newX = sinf(2 * PI * kameraWinkel / 360.0) * 5;
+
+    kamera->setEyePosition(newX, 2, newZ);
 }
 
 
@@ -43,8 +70,9 @@ void Init()	{
 
     glEnable(GL_DEPTH_TEST);
 
-	panzer = new Panzer(0.0, 0.0, -5.0, 0.0, 0.0);
+	panzer = new Panzer(0.0, 0.0, 0.0, 0.0, 0.0);
     kugeln = std::vector<Kugel*>();
+    kamera = new Kamera(0, 2, 5, 0, 0, 0);
 }
 
 
@@ -57,7 +85,7 @@ void RenderScene() { //Zeichenfunktion
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Kamera positionieren
-	gluLookAt(2.0, 2.0, 4.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    kamera->show();
 
     // Boden zeichnen
     glColor3f(0.8, 0.8, 0.8);
@@ -134,6 +162,7 @@ int main(int argc, char **argv) {
    glutDisplayFunc(RenderScene);
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(keyboard);
+   glutSpecialFunc(SpecialKey);
 
 
    // TimerCallback registrieren; wird nach 10 msec aufgerufen mit Parameter 0  

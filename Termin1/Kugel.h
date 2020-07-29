@@ -2,7 +2,7 @@
 class Kugel
 {
 private:
-	const float MAX_SCHUSSWEITE = 20.0;
+	const float MAX_SCHUSSWEITE = 30.0;
 	const float GESCHWINDIGKEIT = 0.5;
 
 	float rootX;
