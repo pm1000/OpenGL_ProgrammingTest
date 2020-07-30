@@ -51,9 +51,4 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\admin\Downloads\jpg2png\panzertexture.png">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
-  </ItemGroup>
 </Project>

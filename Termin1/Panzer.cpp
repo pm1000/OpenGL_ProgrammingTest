@@ -504,13 +504,12 @@ void Panzer::createTurm()
 
 void Panzer::createRohr()
 {
-	//glTranslatef(0., 0.25, 0.0);
+	glTranslatef(0., 0.25, 0.0);
 	glColor4f(0., 0., 0., 1.);
 	Wuerfel(0.2);
 
 	glPushMatrix();
 	glRotatef(rohrWinkel, 1., 0., 0.);
-	glRotatef(-30., 1., 0., 0.);
 
 	glNormal3f(0.0, 1.0, 0.0);
 	GLUquadricObj* quadratic = gluNewQuadric();
