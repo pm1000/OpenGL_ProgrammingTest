@@ -15,15 +15,7 @@ Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrW
 
 Kugel* Panzer::schiessen()
 {
-	// Hier Code zum übergeben der aktuellen Daten für die Kugel
-	// Kugelkonstruktor: new Kugel(rootX, rootY, rootZ, turmWinkel, rohrWinkel)
-	// x, y, z sind die Koordinaten wo die Kugel ihren Ursprung hat
-	// turmWinkel und rohrWinkel können einfach übergeben werden
-	// Schiessen kannst du dann mit Leertaste
 	Kugel* k = new Kugel(x, y + 0.25*0.9 + 0.3 + 0.9, z - 0.3, turmWinkel, rohrWinkel);
-	//Kugel* k = new Kugel(0.0, 1.0, -3.0, 25.0, 25.0); // Beispielwerte für Testkugel
-
-
 	return k;
 }
 
