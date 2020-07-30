@@ -70,6 +70,19 @@ void Init()	{
 
     glEnable(GL_DEPTH_TEST);
 
+	// Licht
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position); // Licht Nr. 0 rechts oben
+	glEnable(GL_COLOR_MATERIAL);
+	// z-Buffer
+	glEnable(GL_DEPTH_TEST);
+	glClearDepth(1.0);
+	// Normalen fuer korrekte Beleuchtungs-Berechnung normalisieren
+	glEnable(GL_NORMALIZE);
+
+
 	panzer = new Panzer(0.0, 0.0, 0.0, 0.0, 0.0);
     kugeln = std::vector<Kugel*>();
     kamera = new Kamera(0, 2, 5, 0, 0, 0);
