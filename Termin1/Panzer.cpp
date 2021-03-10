@@ -3,14 +3,47 @@
 #include <cmath>
 #include "Wuerfel.h"
 
-Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrWinkel)
+Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrWinkel, float rumpfWinkel)
 {
 	this->x = xPos;
 	this->y = yPos;
 	this->z = zPos;
 	this->turmWinkel = turmWinkel;
 	this->rohrWinkel = rohrWinkel;
+	this->rumpfWinkel = rumpfWinkel;
 
+}
+
+void Panzer::move(char direction) {
+	if (direction == 'F') {
+		this->z -= 0.1;
+	}
+	else if (direction == 'B') {
+		this->rumpfWinkel = 0;
+		this->z += 0.1;
+	}
+	else if (direction == 'L') {
+		//if (this->rumpfWinkel == 0 || this->rumpfWinkel >= 180) {
+		//	this->rumpfWinkel -= 2;
+		//	if (this->rumpfWinkel < 0)
+		//		this->rumpfWinkel = 360 + this->rumpfWinkel;
+		//}
+		this->x -= 0.1;
+	}
+	else if (direction == 'R') {
+		//this->rumpfWinkel += 2;
+		//if (rumpfWinkel > 360)
+		//	this->rumpfWinkel -= 360;
+		this->x += 0.1;	
+	}
+	else if (direction == 'G') {
+		if (this->rumpfWinkel > 180 && this->rumpfWinkel <= 360)
+			rumpfWinkel += 2;
+		else if (this->rumpfWinkel <= 180 && this->rumpfWinkel > 0)
+			rumpfWinkel -= 2;
+		else
+			this->rumpfWinkel = 0;
+	}
 }
 
 Kugel* Panzer::schiessen()
@@ -28,7 +61,10 @@ void Panzer::show()
 	glTranslatef(x, y + 0.9, z);
 
 	// Rumpf des Panzers erstellen
+	glPushMatrix();
+	glRotatef(this->rumpfWinkel, 0.0, 1.0, 0.0);
 	createRumpf();
+	glPopMatrix();
 
 	// Den Turm und das Rohr positionieren
 	glTranslatef(0.0, 0.3, -0.3);

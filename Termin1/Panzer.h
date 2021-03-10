@@ -6,10 +6,12 @@ class Panzer
 {
 
 public:
-	Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrWinkel);
+	Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrWinkel, float rumpfWinkel);
 
 	Kugel * schiessen();
 	void show();
+
+	void move(char direction);
 
 	float getTurmWinkel();
 	void setTurmWinkel(float value);
@@ -22,6 +24,7 @@ private:
 	float turmWinkel;
 	float rohrWinkel;
 	float x, y, z;
+	float rumpfWinkel;
 
 	GLuint tex_2d;
 

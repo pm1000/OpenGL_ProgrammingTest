@@ -11,6 +11,7 @@
 
 
 
+
 // Objekte für die Szene vorbereiten
 Panzer* panzer;
 std::vector <Kugel*> kugeln;
@@ -29,11 +30,18 @@ void keyboard(unsigned char key, int x, int y) {
     case 'w': panzer->setRohrWinkel(panzer->getRohrWinkel() - 2); break;
     case 's': panzer->setRohrWinkel(panzer->getRohrWinkel() + 2); break;
     case ' ': kugeln.push_back(panzer->schiessen()); break;
+	/*
     case '0': kamera->setEyePosition(0, 2, 5); break;
     case '1': kamera->setEyePosition(-5, 2, 0); break;
     case '2': kamera->setEyePosition(5, 2, 0); break;
     case '3': kamera->setEyePosition(5, 5, 5); break;
     case '4': kamera->setEyePosition(-5, 5, -5); break;
+	*/
+	case '8': panzer->move('F'); break;
+	case '2': panzer->move('B'); break;
+	case '4': panzer->move('L'); break;
+	case '6': panzer->move('R'); break;
+	case '7': panzer->move('G'); break; //gerade drehen
     }
 }
 
@@ -73,7 +81,7 @@ void Init()	{
 	// Licht
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
-	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat light_position[] = { 10.0, 10.0, 0.0, 0.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position); // Licht Nr. 0 rechts oben
 	glEnable(GL_COLOR_MATERIAL);
 	// z-Buffer
@@ -83,7 +91,7 @@ void Init()	{
 	glEnable(GL_NORMALIZE);
 
 
-	panzer = new Panzer(0.0, 0.0, 0.0, 0.0, 0.0);
+	panzer = new Panzer(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     kugeln = std::vector<Kugel*>();
     kamera = new Kamera(0, 2, 5, 0, 0, 0);
 }
@@ -93,9 +101,10 @@ void Init()	{
 
 
 void RenderScene() { //Zeichenfunktion
-    
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity ();   // Aktuelle Model-/View-Transformations-Matrix zuruecksetzen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
     // Kamera positionieren
     kamera->show();
@@ -123,6 +132,7 @@ void RenderScene() { //Zeichenfunktion
 
 
    glutSwapBuffers();
+   glFlush();
 }
 
 
@@ -167,7 +177,7 @@ int main(int argc, char **argv) {
 
    glutInit( &argc, argv );                // GLUT initialisieren
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB );
-   glutInitWindowSize( 600, 600 );         // Fenster-Konfiguration
+   glutInitWindowSize( 1000, 1000 );         // Fenster-Konfiguration
    glutCreateWindow( "Yannick Brilmayer; Philipp Meier" );   // Fenster-Erzeugung
 
 
