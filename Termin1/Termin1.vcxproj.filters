@@ -51,4 +51,15 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\admin\Downloads\jpg2png\panzertexture.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="C:\Users\admin\Downloads\zielscheibe.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="E:\Studium\Semester 5\GDV Abgabe\OpenGL_Ergaenzungen\TREE1.PNG">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

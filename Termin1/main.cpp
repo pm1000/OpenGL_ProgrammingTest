@@ -8,6 +8,7 @@
 #include "Kugel.h"
 #include "Kamera.h"
 #include <cmath>
+#include "GL/SOIL.h"
 
 
 
@@ -16,6 +17,7 @@
 Panzer* panzer;
 std::vector <Kugel*> kugeln;
 Kamera* kamera;
+GLuint ziel;
 
 
 
@@ -30,13 +32,6 @@ void keyboard(unsigned char key, int x, int y) {
     case 'w': panzer->setRohrWinkel(panzer->getRohrWinkel() - 2); break;
     case 's': panzer->setRohrWinkel(panzer->getRohrWinkel() + 2); break;
     case ' ': kugeln.push_back(panzer->schiessen()); break;
-	/*
-    case '0': kamera->setEyePosition(0, 2, 5); break;
-    case '1': kamera->setEyePosition(-5, 2, 0); break;
-    case '2': kamera->setEyePosition(5, 2, 0); break;
-    case '3': kamera->setEyePosition(5, 5, 5); break;
-    case '4': kamera->setEyePosition(-5, 5, -5); break;
-	*/
 	case '8': panzer->move('F'); break;
 	case '2': panzer->move('B'); break;
 	case '4': panzer->move('L'); break;
@@ -52,16 +47,26 @@ void SpecialKey(int key, int x, int y) {
 
     static float kameraWinkel = 0;
     static const double PI = 3.1415926535897932384626433832795;
-
+	bool arrowSwitch = false;
     switch (key) {
-    case GLUT_KEY_RIGHT: kameraWinkel = (kameraWinkel > 360) ? 0: kameraWinkel + 2; break;
-    case GLUT_KEY_LEFT: kameraWinkel = (kameraWinkel < 0) ? 359 : kameraWinkel - 2; break;
+    case GLUT_KEY_RIGHT: kameraWinkel = (kameraWinkel > 360) ? 0: kameraWinkel + 2;
+		arrowSwitch = true; break;
+    case GLUT_KEY_LEFT: kameraWinkel = (kameraWinkel < 0) ? 359 : kameraWinkel - 2; 
+		arrowSwitch = true; break;
+	//F keys
+	case 1: kamera->setEyePosition(0, 2, 5); break;
+	case 2: kamera->setEyePosition(-5, 2, 0); break;
+	case 3: kamera->setEyePosition(5, 2, 0); break;
+	case 4: kamera->setEyePosition(5, 5, 5); break;
+	case 5: kamera->setEyePosition(-5, 5, -5); break;
     }
 
-    float newZ = cosf(2 * PI * kameraWinkel / 360.0) * 5;
-    float newX = sinf(2 * PI * kameraWinkel / 360.0) * 5;
+	if (arrowSwitch) {
+		float newZ = cosf(2 * PI * kameraWinkel / 360.0) * 5;
+		float newX = sinf(2 * PI * kameraWinkel / 360.0) * 5;
 
-    kamera->setEyePosition(newX, 2, newZ);
+		kamera->setEyePosition(newX, 2, newZ);
+	}
 }
 
 
@@ -71,6 +76,7 @@ void SpecialKey(int key, int x, int y) {
 void Init()	{
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
+
 
     //glEnable(GL_CULL_FACE);
     glFrontFace(GL_CCW);
@@ -89,7 +95,6 @@ void Init()	{
 	glClearDepth(1.0);
 	// Normalen fuer korrekte Beleuchtungs-Berechnung normalisieren
 	glEnable(GL_NORMALIZE);
-
 
 	panzer = new Panzer(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     kugeln = std::vector<Kugel*>();
@@ -117,12 +122,28 @@ void RenderScene() { //Zeichenfunktion
     glVertex3f(100.0, 0.0, 100.0);
     glVertex3f(100.0, 0.0, -100.0);
     glEnd();
+
+	// Rotierende Platte mit transparenter Textur
+	glPushMatrix();
+	//zielscheibe
+	ziel = SOIL_load_OGL_texture("TREE1.PNG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	glBindTexture(GL_TEXTURE_2D, ziel);
+	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f);   glVertex3f(-1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.0f);   glVertex3f(1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f);   glVertex3f(1.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0f, 1.0f);   glVertex3f(-1.0f, 1.0f, 0.0f);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 	
     // Panzer-Zeichenfunktion aufrufen, vorher Panzer ein bisschen nach hinten verschieben
     glPushMatrix();
 	panzer->show();
     glPopMatrix();
-
 
     // Alle Kugeln, die existieren zeichnen lassen
     for (int i = kugeln.size()-1; i >= 0; i--) {
