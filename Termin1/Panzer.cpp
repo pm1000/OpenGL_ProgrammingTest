@@ -11,7 +11,9 @@ Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrW
 	this->turmWinkel = turmWinkel;
 	this->rohrWinkel = rohrWinkel;
 	this->rumpfWinkel = rumpfWinkel;
-
+	this->tex_2d = SOIL_load_OGL_texture("panzertexture2.png", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 }
 
 void Panzer::move(char direction) {
@@ -259,9 +261,6 @@ void Panzer::createRumpfUnten()
 	// Die Panzerfarben einfärben
 	glColor4f(1.0, 1., 1.0,1.);
 
-	GLuint tex_2d = SOIL_load_OGL_texture("panzertexture2.png", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
