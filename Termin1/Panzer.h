@@ -24,7 +24,7 @@ private:
 	float turmWinkel;
 	float rohrWinkel;
 	float x, y, z;
-	float rumpfWinkel;
+	int rumpfWinkel;
 
 	GLuint tex_2d;
 

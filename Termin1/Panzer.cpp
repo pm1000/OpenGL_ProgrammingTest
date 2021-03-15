@@ -18,33 +18,30 @@ Panzer::Panzer(float xPos, float yPos, float zPos, float turmWinkel, float rohrW
 
 void Panzer::move(char direction) {
 	if (direction == 'F') {
-		this->z -= 0.1;
+		double turnVal = static_cast<double> (this->rumpfWinkel % 90) / 90;
+		this->z -= 0.1 * (1 - turnVal);
+		if (this->rumpfWinkel < 180)
+			this->x -= 0.1 * turnVal;
+		else
+			this->x += 0.1 * turnVal;
+		
 	}
 	else if (direction == 'B') {
-		this->rumpfWinkel = 0;
-		this->z += 0.1;
+		double turnVal = static_cast<double> (this->rumpfWinkel % 90) / 90;
+		this->z += 0.1 * (1 - turnVal);
+		if (this->rumpfWinkel < 180)
+			this->x += 0.1 * turnVal;
+		else
+			this->x -= 0.1 * turnVal;
 	}
 	else if (direction == 'L') {
-		//if (this->rumpfWinkel == 0 || this->rumpfWinkel >= 180) {
-		//	this->rumpfWinkel -= 2;
-		//	if (this->rumpfWinkel < 0)
-		//		this->rumpfWinkel = 360 + this->rumpfWinkel;
-		//}
-		this->x -= 0.1;
+		this->rumpfWinkel += 2;
+		this->rumpfWinkel = this->rumpfWinkel % 360;
 	}
 	else if (direction == 'R') {
-		//this->rumpfWinkel += 2;
-		//if (rumpfWinkel > 360)
-		//	this->rumpfWinkel -= 360;
-		this->x += 0.1;	
-	}
-	else if (direction == 'G') {
-		if (this->rumpfWinkel > 180 && this->rumpfWinkel <= 360)
-			rumpfWinkel += 2;
-		else if (this->rumpfWinkel <= 180 && this->rumpfWinkel > 0)
-			rumpfWinkel -= 2;
-		else
-			this->rumpfWinkel = 0;
+		this->rumpfWinkel -= 2;
+		if (this->rumpfWinkel < 0)
+			this->rumpfWinkel += 360;
 	}
 }
 
@@ -149,9 +146,7 @@ void Panzer::createRumpfOben()
 {
 	//// Panzer einfärben
 	glColor4f(1.0, 1.0, 1.0,1.);
-	GLuint tex_2d = SOIL_load_OGL_texture("panzertexture2.png", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

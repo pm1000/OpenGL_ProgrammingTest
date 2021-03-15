@@ -37,7 +37,6 @@ void keyboard(unsigned char key, int x, int y) {
 	case '2': panzer->move('B'); break;
 	case '4': panzer->move('L'); break;
 	case '6': panzer->move('R'); break;
-	case '7': panzer->move('G'); break; //gerade drehen
 	}
 }
 
@@ -62,9 +61,10 @@ void SpecialKey(int key, int x, int y) {
 	case 5: kamera->setEyePosition(-5, 5, -5); break;
 	}
 
+	//set new camera position if it is not a fixed position
 	if (arrowSwitch) {
-		float newZ = cosf(2 * PI * kameraWinkel / 360.0) * 5;
-		float newX = sinf(2 * PI * kameraWinkel / 360.0) * 5;
+		double newZ = cosf(2 * PI * kameraWinkel / 360.0) * 5;
+		double newX = sinf(2 * PI * kameraWinkel / 360.0) * 5;
 
 		kamera->setEyePosition(newX, 2, newZ);
 	}
@@ -83,6 +83,12 @@ void Init() {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
 
+
+	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat low_shininess[] = { 5.0 };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+
 	//glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
@@ -93,7 +99,7 @@ void Init() {
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	GLfloat light_position[] = { 10.0, 10.0, 0.0, 0.0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position); // Licht Nr. 0 rechts oben
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position); 
 	glEnable(GL_COLOR_MATERIAL);
 	// z-Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -124,7 +130,7 @@ void RenderScene() { //Zeichenfunktion
 	glBindTexture(GL_TEXTURE_2D, gras);
 	glEnable(GL_TEXTURE_2D);
 	glColor4f(1., 1., 1., 1.);
-	glBegin(GL_POLYGON);
+	glBegin(GL_QUADS);
 	glVertex3f(-100.0, 0.0, -100.0);
 	glTexCoord2f(0., 0.);
 	glVertex3f(-100.0, 0.0, 100.0);
