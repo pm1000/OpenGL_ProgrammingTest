@@ -80,14 +80,14 @@ void Init() {
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 	gras = SOIL_load_OGL_texture("gras.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(.0, 1.0, .0, 1.0);
 
 
-
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat low_shininess[] = { 5.0 };
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+	//reflektionen
+	GLfloat mat[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat shine[] = { 5.0 };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat);
+	glMaterialfv(GL_FRONT, GL_SHININESS, shine);
 
 	//glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
